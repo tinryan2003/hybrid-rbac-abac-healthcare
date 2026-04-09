@@ -9,7 +9,6 @@ Simulated healthcare microservices platform implementing Hybrid RBAC-ABAC with K
 [![Keycloak](https://img.shields.io/badge/IAM-Keycloak-blue)](#)
 [![OPA](https://img.shields.io/badge/Policy-OPA-purple)](#)
 [![Docker](https://img.shields.io/badge/Container-Docker-2496ED)](#)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](#license)
 
 A production-oriented microservices platform for healthcare domains, implementing **Hybrid RBAC-ABAC** authorization using **Keycloak** (identity and role management) and **Open Policy Agent (OPA)** (policy decision engine).
 
