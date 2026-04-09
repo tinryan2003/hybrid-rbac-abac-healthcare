@@ -22,15 +22,6 @@ A production-oriented microservices platform for healthcare domains, implementin
 - [Architecture](#architecture)
 - [Tech Stack](#tech-stack)
 - [Repository Structure](#repository-structure)
-- [Quick Start](#quick-start)
-- [Authorization Flow (RBAC + ABAC)](#authorization-flow-rbac--abac)
-- [Configuration](#configuration)
-- [Testing](#testing)
-- [Roadmap](#roadmap)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
-
 ---
 
 ## Overview
