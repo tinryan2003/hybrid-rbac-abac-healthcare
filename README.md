@@ -86,6 +86,15 @@ This platform addresses both by externalizing authorization logic through OPA wh
 | **User Service** | 8090 | Employee profiles, approval limits (PIP) |
 | **Reporting Service** | 8089 | Report generation (PDF, Excel, CSV) |
 
+## Infrastructure
+
+| Component | Port | Purpose |
+|-----------|------|---------|
+| **Keycloak** | 8180 | SSO, JWT tokens, user management (IdP) |
+| **OPA** | 8181 | Policy engine (declarative Rego policies) |
+| **MySQL** | 3306 | Persistent storage (8 databases) |
+| **RabbitMQ** | 5672 | Event-driven architecture |
+
 ## Tech Stack
 
 ### Backend
