@@ -8,7 +8,6 @@ Simulated healthcare microservices platform implementing Hybrid RBAC-ABAC with K
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen)](#)
 [![Keycloak](https://img.shields.io/badge/IAM-Keycloak-blue)](#)
 [![OPA](https://img.shields.io/badge/Policy-OPA-purple)](#)
-[![Docker](https://img.shields.io/badge/Container-Docker-2496ED)](#)
 
 A production-oriented microservices platform for healthcare domains, implementing **Hybrid RBAC-ABAC** authorization using **Keycloak** (identity and role management) and **Open Policy Agent (OPA)** (policy decision engine).
 
@@ -19,6 +18,7 @@ A production-oriented microservices platform for healthcare domains, implementin
 - [Problem Statement](#problem-statement)
 - [Key Capabilities](#key-capabilities)
 - [Architecture](#architecture)
+- [Microservices](#microservices)
 - [Tech Stack](#tech-stack)
 - [Repository Structure](#repository-structure)
 ---
@@ -72,6 +72,19 @@ This platform addresses both by externalizing authorization logic through OPA wh
 `Client -> Gateway -> Authorization Service -> OPA -> Allow/Deny -> Domain Service`
 
 ---
+
+## Microservices
+
+| Service | Port | Purpose |
+|---------|------|---------|
+| **Spring Cloud Gateway** | 8083 | API Gateway, JWT validation, routing |
+| **Authorization Service** | 8087 | OPA-based RBAC+ABAC enforcement (PDP) |
+| **Account Service** | 8085 | Account management, PIP (Policy Information Point) |
+| **Transaction Service** | 8086 | Transaction processing, approval routing |
+| **Notification Service** | 8088 | Email, WebSocket, push notifications |
+| **Audit Service** | 8091 | Audit logging, compliance |
+| **User Service** | 8090 | Employee profiles, approval limits (PIP) |
+| **Reporting Service** | 8089 | Report generation (PDF, Excel, CSV) |
 
 ## Tech Stack
 
