@@ -1,0 +1,190 @@
+# ===================================
+# Spring Cloud Gateway Configuration
+# ===================================
+server:
+  port: 8089
+
+spring:
+  application:
+    name: hospital-gateway
+
+  # ===================================
+  # Gateway Routes Configuration - Hospital Management System
+  # ===================================
+  cloud:
+    gateway:
+      routes:
+        # User Service
+        - id: user-service
+          uri: http://localhost:8200
+          predicates:
+            - Path=/api/users/**
+          filters:
+            - StripPrefix=1
+
+        # Patient Service
+        - id: patient-service
+          uri: http://localhost:8085
+          predicates:
+            - Path=/api/patients/**
+          filters:
+            - StripPrefix=1
+
+        # Appointment Service
+        - id: appointment-service
+          uri: http://localhost:8093
+          predicates:
+            - Path=/api/appointments/**
+          filters:
+            - StripPrefix=1
+
+        # Lab & Order Entry Service
+        - id: lab-service
+          uri: http://localhost:8094
+          predicates:
+            - Path=/api/lab/**
+          filters:
+            - StripPrefix=1
+
+        # Pharmacy Service
+        - id: pharmacy-service
+          uri: http://localhost:8096
+          predicates:
+            - Path=/api/pharmacy/**
+          filters:
+            - StripPrefix=1
+
+        # Billing Service
+        - id: billing-service
+          uri: http://localhost:8098
+          predicates:
+            - Path=/api/billing/**
+          filters:
+            - StripPrefix=1
+
+        # Authorization Service
+        - id: authorization-service
+          uri: http://localhost:8102
+          predicates:
+            - Path=/api/authorization/**
+          filters:
+            - StripPrefix=1
+
+        # Audit Service
+        - id: audit-service
+          uri: http://localhost:8091
+          predicates:
+            - Path=/api/audit/**
+          filters:
+            - StripPrefix=1
+
+        # Notification Service
+        - id: notification-service
+          uri: http://localhost:8088
+          predicates:
+            - Path=/api/notifications/**
+          filters:
+            - StripPrefix=1
+
+        # Announcement Service (part of notification-service)
+        - id: announcement-service
+          uri: http://localhost:8088
+          predicates:
+            - Path=/api/announcements/**
+          filters:
+            - StripPrefix=1
+
+        # Reporting Service
+        - id: reporting-service
+          uri: http://localhost:5523
+          predicates:
+            - Path=/api/reports/**
+          filters:
+            - StripPrefix=1
+
+        # Policy Service (CRUD policies at POST/GET /api/policies)
+        # Match both exact /api/policies and /api/policies/** (Path=/api/policies/** may not match /api/policies in some versions)
+        - id: policy-service
+          uri: http://localhost:8101
+          predicates:
+            - Path=/api/policies,/api/policies/**
+          filters:
+            - StripPrefix=1
+
+      # ===================================
+      # CORS Configuration
+      # ===================================
+      globalcors:
+        corsConfigurations:
+          "[/**]":
+            allowedOrigins: http://localhost:3000,http://localhost:5000
+            allowedMethods: GET,POST,PUT,DELETE,OPTIONS,PATCH
+            allowedHeaders: "*"
+            allowCredentials: true
+            maxAge: 3600
+
+  # ===================================
+  # Redis Configuration (for rate limiting)
+  # ===================================
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+# ===================================
+# Actuator Endpoints
+# ===================================
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
+  endpoint:
+    health:
+      show-details: always
+    gateway:
+      enabled: true
+    info:
+      enabled: true
+
+# ===================================
+# Authorization Service Configuration (PEP)
+# ===================================
+authorization:
+  service:
+    url: http://localhost:8102  # Local: 8102, Docker: 8087
+  enforcement:
+    enabled: true  # Set to false to disable PEP enforcement
+
+# ===================================
+# Keycloak Token Introspection (optional)
+# ===================================
+# When enabled, gateway calls Keycloak to check if token is still active (session not
+# expired/revoked). Use when you need to reject tokens as soon as Keycloak session ends.
+# Keycloak: create client (e.g. gateway-client), Service account ON, assign
+# realm-management -> role "introspection" to the service account.
+keycloak:
+  introspection:
+    enabled: false
+    uri: http://localhost:8180/realms/hospital-realm/protocol/openid-connect/token/introspect
+    client-id: gateway-client
+    client-secret: ""
+
+# ===================================
+# Rate Limiting Configuration
+# ===================================
+ratelimit:
+  enabled: false          # Disable in development; set true in production
+  max-requests: 1000      # Requests per user per window
+  window-minutes: 1       # Rolling window size in minutes
+
+# ===================================
+# Logging
+# ===================================
+logging:
+  level:
+    "org.springframework.cloud.gateway": DEBUG
+    "org.springframework.security": DEBUG
+    "reactor.netty.http.client": DEBUG
+    "org.vgu.springcloudgateway": DEBUG
+    "org.vgu.springcloudgateway.filter.AuthorizationEnforcementFilter": DEBUG

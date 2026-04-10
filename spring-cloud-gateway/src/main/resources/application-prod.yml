@@ -1,0 +1,91 @@
+# ===================================
+# Production Profile Configuration
+# ===================================
+# Use this profile for production: -Dspring.profiles.active=prod
+
+# ===================================
+# Gateway Configuration
+# ===================================
+spring:
+  application:
+    name: banking-gateway
+  server:
+    port: 8081
+
+  # ===================================
+  # Gateway Routes - Production
+  # ===================================
+  cloud:
+    gateway:
+      routes:
+        - id: banking-backend
+          uri: ${BACKEND_URI:http://backend-service:8083}
+          predicates:
+            - Path=/api/**
+          filters:
+            - StripPrefix=1
+        - id: keycloak
+          uri: ${KEYCLOAK_URI:http://keycloak:8180}
+          predicates:
+            - Path=/auth/**
+      # ===================================
+      # CORS Configuration - Production
+      # ===================================
+      globalcors:
+        corsConfigurations:
+          "[/**]":
+            allowedOrigins: ${CORS_ORIGINS:https://banking.example.com}
+            allowedMethods: GET,POST,PUT,DELETE,OPTIONS,PATCH
+            allowedHeaders: "*"
+            allowCredentials: true
+            maxAge: 3600
+
+  # ===================================
+  # Redis Configuration - Production
+  # ===================================
+  data:
+    redis:
+      host: ${REDIS_HOST:redis}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      timeout: 2000ms
+
+# ===================================
+# Actuator Endpoints - Production
+# ===================================
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
+  endpoint:
+    health:
+      show-details: when-authorized
+    gateway:
+      enabled: true
+    info:
+      enabled: true
+
+# ===================================
+# Logging - Production (Minimal)
+# ===================================
+logging:
+  level:
+    root: WARN
+    "org.springframework.cloud.gateway": INFO
+    "org.springframework.security": INFO
+    "org.vgu.springcloudgateway": INFO
+
+# ===================================
+# Security Headers
+# ===================================
+server:
+  compression:
+    enabled: true
+  http2:
+    enabled: true
+
+# ===================================
+# Note: JWT decoding handled by MultiRealmJwtDecoder
+# Supports both employee-portal and customer-portal realms
+# ===================================

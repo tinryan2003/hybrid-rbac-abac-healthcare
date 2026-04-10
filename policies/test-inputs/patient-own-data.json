@@ -1,0 +1,22 @@
+{
+  "input": {
+    "user": {
+      "id": "patient1-uuid",
+      "role": "PATIENT",
+      "hospital_id": "HOSPITAL_A"
+    },
+    "resource": {
+      "object": "patient_record",
+      "action": "read",
+      "resource_id": "123",
+      "owner_id": "patient1-uuid",
+      "hospital_id": "HOSPITAL_A"
+    },
+    "context": {
+      "hour": 14,
+      "minute": 0,
+      "ipAddress": "192.168.1.100",
+      "channel": "WEB"
+    }
+  }
+}

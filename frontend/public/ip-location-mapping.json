@@ -1,0 +1,123 @@
+{
+  "locations": [
+    {
+      "name": "Ho Chi Minh City - Main Hospital",
+      "city": "Ho Chi Minh City",
+      "region": "South Vietnam",
+      "ipRanges": [
+        {
+          "start": "192.168.1.1",
+          "end": "192.168.1.254"
+        },
+        {
+          "start": "10.0.1.1",
+          "end": "10.0.1.255"
+        }
+      ],
+      "cidr": [
+        "192.168.1.0/24",
+        "10.0.1.0/24"
+      ],
+      "hospitalIp": "192.168.1.100"
+    },
+    {
+      "name": "Hanoi - Branch Hospital",
+      "city": "Hanoi",
+      "region": "North Vietnam",
+      "ipRanges": [
+        {
+          "start": "192.168.2.1",
+          "end": "192.168.2.254"
+        },
+        {
+          "start": "10.0.2.1",
+          "end": "10.0.2.255"
+        }
+      ],
+      "cidr": [
+        "192.168.2.0/24",
+        "10.0.2.0/24"
+      ],
+      "hospitalIp": "192.168.2.100"
+    },
+    {
+      "name": "Da Nang - Regional Hospital",
+      "city": "Da Nang",
+      "region": "Central Vietnam",
+      "ipRanges": [
+        {
+          "start": "192.168.3.1",
+          "end": "192.168.3.254"
+        },
+        {
+          "start": "10.0.3.1",
+          "end": "10.0.3.255"
+        }
+      ],
+      "cidr": [
+        "192.168.3.0/24",
+        "10.0.3.0/24"
+      ],
+      "hospitalIp": "192.168.3.100"
+    },
+    {
+      "name": "Can Tho - Regional Hospital",
+      "city": "Can Tho",
+      "region": "Mekong Delta",
+      "ipRanges": [
+        {
+          "start": "192.168.4.1",
+          "end": "192.168.4.254"
+        },
+        {
+          "start": "10.0.4.1",
+          "end": "10.0.4.255"
+        }
+      ],
+      "cidr": [
+        "192.168.4.0/24",
+        "10.0.4.0/24"
+      ],
+      "hospitalIp": "192.168.4.100"
+    },
+    {
+      "name": "Hai Phong - Branch Hospital",
+      "city": "Hai Phong",
+      "region": "North Vietnam",
+      "ipRanges": [
+        {
+          "start": "192.168.5.1",
+          "end": "192.168.5.254"
+        },
+        {
+          "start": "10.0.5.1",
+          "end": "10.0.5.255"
+        }
+      ],
+      "cidr": [
+        "192.168.5.0/24",
+        "10.0.5.0/24"
+      ],
+      "hospitalIp": "192.168.5.100"
+    },
+    {
+      "name": "Local Development",
+      "city": "Local",
+      "region": "Development",
+      "ipRanges": [
+        {
+          "start": "127.0.0.1",
+          "end": "127.0.0.1"
+        },
+        {
+          "start": "localhost",
+          "end": "localhost"
+        }
+      ],
+      "cidr": [
+        "127.0.0.1/32"
+      ],
+      "hospitalIp": "127.0.0.1"
+    }
+  ]
+}

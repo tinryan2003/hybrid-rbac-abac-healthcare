@@ -1,0 +1,100 @@
+% Compile this document with XeLaTeX or LuaLaTeX, not pdfLaTeX!
+
+\documentclass[12pt,oneside]{report}
+
+\usepackage{array}
+\usepackage{lipsum}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[a4paper,width=150mm,top=25mm,bottom=25mm,bindingoffset=6mm]{geometry}
+\usepackage{amsmath}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{setspace}
+\usepackage{fontspec}
+\usepackage{url}
+
+\usepackage{multirow}
+\usepackage{booktabs}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+\usepackage{fancyhdr}
+
+\usepackage[sorting=none]{biblatex}
+\addbibresource{references.bib}
+
+\input{codeFormat}
+
+\setmainfont{Times New Roman}
+
+\graphicspath{ {images/} }
+
+\title{Implementing a Hybrid Access Control Model for Fine-Grained Authorization in Hospital Management Application}
+\author{Tu Trung Tin}
+\date{\today}
+
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+% Rename bibliography
+\renewcommand\bibname{References}
+
+\include{Title}
+
+\chapter*{\centering Declaration}
+\input{chapters/Declaration}
+
+\chapter*{\centering Acknowledgement}
+\input{chapters/Acknowledgement}
+
+\chapter*{\centering Abstract}
+\input{chapters/Abstract}
+
+\chapter*{Abbreviation}
+\input{chapters/Abbreviation}
+
+\listoffigures
+\listoftables
+
+\renewcommand{\contentsname}{Table of Contents}
+\tableofcontents
+
+\pagestyle{fancy}
+
+\fancyhead{}
+\fancyhead[L]{Vietnamese-German University \\ Computer Science Program}
+\fancyhead[R]{Tu Trung Tin - 10421106}
+\fancyfoot{}
+\fancyfoot[L]{Implementing a Hybrid Access Control Model for Fine-Grained Authorization in Hospital Management Application}
+\fancyfoot[R]{\thepage}
+
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\chapter{Introduction}
+\input{chapters/chap-Introduction}
+
+\chapter{Literature Review \& Background}
+\input{chapters/chap-lit}
+
+\chapter{System Analysis \& Design}
+\input{chapters/chap-Table}
+
+\chapter{Implementation \& Evaluation}
+\label{chap:implementaion}
+\input{chapters/chap-Formula}
+
+\chapter{Conclusion \& Future work}
+\input{chapters/chap-Code}
+
+\chapter*{References}
+\printbibliography[heading=none]
+
+
+\end{document}

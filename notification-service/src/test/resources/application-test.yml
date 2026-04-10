@@ -1,0 +1,65 @@
+server:
+  port: 8087
+
+spring:
+  application:
+    name: notification-service-test
+    
+  # H2 In-Memory Database for Testing
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    
+  # JPA Configuration for H2
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
+        
+  h2:
+    console:
+      enabled: true
+      
+  # Disable OAuth2 Resource Server for tests (mocked)
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri:
+          jwk-set-uri:
+  
+  # Test RabbitMQ (use embedded or mock)
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: admin
+  
+  # Disable email for tests
+  mail:
+    host: localhost
+    port: 25
+    username: test
+    password: test
+
+# Logging
+logging:
+  level:
+    org.vgu.notificationservice: DEBUG
+    org.springframework.security: INFO
+    org.hibernate.SQL: DEBUG
+
+# Test notification config
+notification:
+  email:
+    from: test@test.com
+    from-name: Test Banking System
+  websocket:
+    enabled: false
+

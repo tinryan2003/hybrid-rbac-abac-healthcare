@@ -1,0 +1,82 @@
+server:
+  port: 5523
+
+spring:
+  application:
+    name: reporting-service
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/hospital_reporting?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: S@l19092003
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: false
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8180/realms/hospital-realm
+          jwk-set-uri: http://localhost:8180/realms/hospital-realm/protocol/openid-connect/certs
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME:your-email@gmail.com}
+    password: ${MAIL_PASSWORD:your-app-password}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+# URLs of other microservices (used by ReportDataService via RestClient)
+services:
+  audit-service:
+    url: ${AUDIT_SERVICE_URL:http://localhost:8091}
+  patient-service:
+    url: ${PATIENT_SERVICE_URL:http://localhost:8085}
+  appointment-service:
+    url: ${APPOINTMENT_SERVICE_URL:http://localhost:8093}
+  billing-service:
+    url: ${BILLING_SERVICE_URL:http://localhost:8098}
+  lab-service:
+    url: ${LAB_SERVICE_URL:http://localhost:8094}
+  pharmacy-service:
+    url: ${PHARMACY_SERVICE_URL:http://localhost:8096}
+
+# Report generation settings
+reporting:
+  output-directory: ${user.home}/hospital-reports
+  max-concurrent-reports: 5
+  retention-days: 90
+  scheduled:
+    enabled: true
+    daily-report: "0 0 1 * * ?"    # 01:00 AM daily
+    weekly-report: "0 0 2 * * SUN" # 02:00 AM Sunday
+    monthly-report: "0 0 3 1 * ?"  # 03:00 AM on 1st of month
+
+# Actuator endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    org.vgu.reportingservice: DEBUG
+    org.springframework.security: INFO
+    org.springframework.web.client: WARN

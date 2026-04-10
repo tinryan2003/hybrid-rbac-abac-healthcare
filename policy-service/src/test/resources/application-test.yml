@@ -1,0 +1,53 @@
+# Test Configuration for Performance Tests
+
+spring:
+  application:
+    name: policy-service-test
+  
+  datasource:
+    # DATABASE_TO_LOWER=TRUE: H2 keeps table names lowercase, matching Hibernate's quoted names
+    url: jdbc:h2:mem:testdb;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;DATABASE_TO_LOWER=TRUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      # update: create tables if missing, do not drop. "create"/"create-drop" run drop first and fail on empty H2.
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: false
+        use_sql_comments: false
+        
+  h2:
+    console:
+      enabled: false
+
+# Logging (keep OPA sync at WARN to avoid flooding stdout and corrupting Surefire channel)
+logging:
+  level:
+    root: WARN
+    org.vgu.policyservice: INFO
+    org.vgu.policyservice.service.OpaSyncService: WARN
+    org.vgu.policyservice.performance: INFO
+    org.hibernate: WARN
+    org.springframework: WARN
+    org.springframework.boot.autoconfigure: WARN
+    org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLogger: OFF
+
+# Governance overrides for tests/performance scenarios
+policy:
+  # Performance tests may intentionally generate overlapping rules; keep conflict gating off
+  conflict-on-save: off
+
+# Performance test specific settings
+performance:
+  test:
+    # Default policy counts to test
+    sizes: 100,500,1000
+    # Enable detailed logging
+    detailed-logging: true

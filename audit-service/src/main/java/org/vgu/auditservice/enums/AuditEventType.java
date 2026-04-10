@@ -1,0 +1,49 @@
+package org.vgu.auditservice.enums;
+
+public enum AuditEventType {
+    // Account Events
+    ACCOUNT_CREATED,
+    ACCOUNT_UPDATED,
+    ACCOUNT_CLOSED,
+    ACCOUNT_APPROVED,
+    ACCOUNT_REJECTED,
+    ACCOUNT_STATUS_CHANGED,
+
+    // Transaction Events
+    TRANSACTION_CREATED,
+    TRANSACTION_APPROVED,
+    TRANSACTION_REJECTED,
+    TRANSACTION_COMPLETED,
+    TRANSACTION_FAILED,
+
+    // Customer Events
+    CUSTOMER_CREATED,
+    CUSTOMER_UPDATED,
+    CUSTOMER_DELETED,
+    CUSTOMER_PROFILE_VIEWED,
+
+    // Employee Events
+    EMPLOYEE_CREATED,
+    EMPLOYEE_UPDATED,
+    EMPLOYEE_DELETED,
+    EMPLOYEE_ROLE_CHANGED,
+
+    // Authorization Events
+    AUTHORIZATION_SUCCESS,
+    AUTHORIZATION_DENIED,
+    AUTHORIZATION_POLICY_EVALUATED,
+
+    // Authentication Events
+    LOGIN_SUCCESS,
+    LOGIN_FAILED,
+    LOGOUT,
+
+    // Security Events
+    TRUST_SCORE_UPDATED,
+    SUSPICIOUS_ACTIVITY_DETECTED,
+    ACCESS_DENIED,
+
+    // System Events
+    SYSTEM_ERROR,
+    CONFIGURATION_CHANGED
+}

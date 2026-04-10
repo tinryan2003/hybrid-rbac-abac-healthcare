@@ -1,0 +1,26 @@
+{
+  "input": {
+    "user": {
+      "id": "primarydoc1-uuid",
+      "role": "PRIMARY_DOCTOR",
+      "department_id": "1",
+      "hospital_id": "HOSPITAL_A",
+      "ward_id": "WARD_1A",
+      "position_level": 3
+    },
+    "resource": {
+      "object": "patient_record",
+      "action": "read",
+      "resource_id": "789",
+      "department_id": "2",
+      "hospital_id": "HOSPITAL_A"
+    },
+    "context": {
+      "hour": 14,
+      "minute": 0,
+      "workShiftActive": true,
+      "ipAddress": "192.168.1.20",
+      "channel": "WEB"
+    }
+  }
+}

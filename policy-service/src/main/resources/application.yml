@@ -1,0 +1,75 @@
+server:
+  port: 8101
+  # Allow large policy payloads (e.g. policy with many rules via POST body)
+  max-http-header-size: 65536
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+spring:
+  codec:
+    max-in-memory-size: 50MB
+  application:
+    name: policy-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/hospital_policies?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: S@l19092003
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8180/realms/hospital-realm
+          jwk-set-uri: http://localhost:8180/realms/hospital-realm/protocol/openid-connect/certs
+
+logging:
+  pattern:
+    console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n"
+  level:
+    org.vgu.policyservice: INFO
+    org.springframework.security: WARN
+    org.hibernate.SQL: WARN
+    org.hibernate.type.descriptor.sql: WARN
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+# Optional: show SQL in console (set to DEBUG to see queries)
+#  org.hibernate.SQL: DEBUG
+
+# Policy governance (conflict control & guardrails)
+# conflict-on-save: off | warn | strict
+#   off   = do not run conflict check on create/update (default)
+#   strict = block save with 409 if AUTH_CONFLICT would be introduced
+#   warn  = save anyway but return conflict report in response (future)
+policy:
+  conflict-on-save: strict
+  reject-wildcard: false # if true, reject rules with resource="*" or action=["*"]
+
+# OPA Integration Configuration
+opa:
+  url: http://localhost:8181
+  data-path-prefix: /v1/data/dynamic_policies
+  sync:
+    enabled: true
+    on-startup: true # Sync all policies when service starts
+    batch-size: 50 # Number of policies to sync in one batch
+    startup-retries: 10 # Retry waiting for OPA at startup (policy-service may start before OPA)
+    startup-retry-delay-ms: 3000 # Delay between startup retries (ms)
+    interval-ms: 300000 # Periodic full sync (ms). 300000 = 5 min. Set 0 to disable periodic sync.

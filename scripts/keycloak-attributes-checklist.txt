@@ -1,0 +1,43 @@
+KEYCLOAK – Việc cần làm cho 3 user (doctor1, nurse1, patient1)
+================================================================
+Hướng dẫn đầy đủ: docs/KEYCLOAK_SETUP.md
+
+1. Điền Custom Attributes cho từng user
+   Vào: Users > [username] > Details > kéo xuống Custom Attributes
+
+   doctor1:
+     hospital_id    = HOSPITAL_A
+     department_id   = 1
+     ward_id        = WARD_3B
+     position_level = 2
+   (Sau mỗi dòng bấm "Add", rồi "Save")
+
+   nurse1:
+     hospital_id    = HOSPITAL_A
+     department_id   = 1
+     ward_id        = WARD_3B
+     position_level = 1
+
+   patient1 (nếu cần ABAC cho patient):
+     hospital_id    = HOSPITAL_A
+     department_id  = (để trống hoặc 0)
+     ward_id        = (để trống)
+     position_level = 0
+
+2. Kiểm tra Client Scopes / Mappers
+   Vào: Clients > hospital-client > Client scopes > hospital-client-dedicated > Mappers
+   Đảm bảo có 4 mapper đưa attribute vào JWT:
+   - hospital_id (User Attribute, token claim: hospital_id)
+   - department_id (User Attribute, token claim: department_id)
+   - ward_id (User Attribute, token claim: ward_id)
+   - position_level (User Attribute, token claim: position_level, type: int)
+
+3. Kiểm tra Role mapping
+   Mỗi user > tab "Role mapping":
+   - doctor1: assign realm role DOCTOR
+   - nurse1: assign realm role NURSE
+   - patient1: assign realm role PATIENT
+
+4. Sau khi điền xong
+   User đăng nhập lại (hoặc refresh token) để JWT có đủ attributes.
+   Decode JWT tại https://jwt.io để xem claims: hospital_id, department_id, ward_id, position_level.

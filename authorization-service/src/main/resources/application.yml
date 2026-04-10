@@ -1,0 +1,103 @@
+server:
+  port: 8102
+
+spring:
+  application:
+    name: authorization-service
+    
+  # OAuth2 Resource Server (Keycloak)
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8180/realms/hospital-realm
+          jwk-set-uri: http://localhost:8180/realms/hospital-realm/protocol/openid-connect/certs
+  
+  # RabbitMQ Configuration (for audit event publishing)
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: admin
+  
+  # Redis Configuration (for PIP caching)
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 20
+          max-idle: 10
+          min-idle: 5
+          max-wait: 2000ms
+  
+  # Cache Configuration
+  cache:
+    type: redis
+    redis:
+      time-to-live: 300000  # 5 minutes in milliseconds
+      cache-null-values: false
+
+# OPA Configuration (Open Policy Agent)
+opa:
+  url: http://localhost:8181
+  policy:
+    package: hospital.authz
+
+# Feign Client Configuration (Optimized for faster failure detection)
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 1000  # Reduced from 5000ms to 1000ms
+        readTimeout: 2000     # Reduced from 5000ms to 2000ms
+        loggerLevel: basic
+  httpclient:
+    enabled: true
+    max-connections: 200
+    max-connections-per-route: 50
+        
+# Service URLs (Policy Information Points - PIPs)
+services:
+  user-service:
+    url: ${USER_SERVICE_URL:http://localhost:8200}
+  patient-service:
+    url: http://localhost:8085
+  appointment-service:
+    url: http://localhost:8093
+  billing-service:
+    url: http://localhost:8098
+  lab-service:
+    url: http://localhost:8094
+  pharmacy-service:
+    url: http://localhost:8096
+  policy-service:
+    url: http://localhost:8101
+
+# RabbitMQ Exchange and Routing
+rabbitmq:
+  exchange:
+    audit:
+      name: audit.exchange
+  routing:
+    audit:
+      authorization: audit.authorization
+
+# Logging
+logging:
+  level:
+    org.vgu.authorizationservice: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.web.reactive.function.client: DEBUG
+
+# Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always

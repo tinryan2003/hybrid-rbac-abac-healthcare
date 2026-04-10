@@ -1,0 +1,25 @@
+{
+  "input": {
+    "user": {
+      "id": "nurse1-uuid",
+      "role": "NURSE",
+      "department_id": "1",
+      "hospital_id": "HOSPITAL_A",
+      "ward_id": "WARD_2A",
+      "position_level": 1
+    },
+    "resource": {
+      "object": "patient_vitals",
+      "action": "read",
+      "department_id": "1",
+      "hospital_id": "HOSPITAL_A"
+    },
+    "context": {
+      "hour": 10,
+      "minute": 30,
+      "workShiftActive": true,
+      "ipAddress": "192.168.1.15",
+      "channel": "WEB"
+    }
+  }
+}

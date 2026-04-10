@@ -1,0 +1,83 @@
+# ===================================
+# Development Profile Configuration
+# ===================================
+# Use this profile for local development: -Dspring.profiles.active=dev
+
+# ===================================
+# Gateway Configuration
+# ===================================
+spring:
+  application:
+    name: banking-gateway
+  server:
+    port: 8081
+
+  # ===================================
+  # Gateway Routes - Development
+  # ===================================
+  cloud:
+    gateway:
+      routes:
+        - id: banking-backend
+          uri: http://localhost:8083
+          predicates:
+            - Path=/api/**
+          filters:
+            - StripPrefix=1
+        - id: keycloak
+          uri: http://localhost:8180
+          predicates:
+            - Path=/auth/**
+      # ===================================
+      # CORS Configuration - Development
+      # ===================================
+      globalcors:
+        corsConfigurations:
+          "[/**]":
+            allowedOrigins: "http://localhost:3000,http://localhost:5000,http://localhost:5173"
+            allowedMethods: "GET,POST,PUT,DELETE,OPTIONS,PATCH"
+            allowedHeaders: "*"
+            allowCredentials: true
+            maxAge: 3600
+
+  # ===================================
+  # Redis Configuration - Development
+  # ===================================
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 2000ms
+
+# ===================================
+# Actuator Endpoints - Development
+# ===================================
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+    gateway:
+      enabled: true
+    info:
+      enabled: true
+
+# ===================================
+# Logging - Development (Verbose)
+# ===================================
+logging:
+  level:
+    root: INFO
+    "org.springframework.cloud.gateway": DEBUG
+    "org.springframework.security": DEBUG
+    "org.springframework.web.reactive": DEBUG
+    "reactor.netty.http.client": DEBUG
+    "org.vgu.springcloudgateway": DEBUG
+
+# ===================================
+# Note: JWT decoding handled by MultiRealmJwtDecoder
+# Supports both employee-portal and customer-portal realms
+# ===================================

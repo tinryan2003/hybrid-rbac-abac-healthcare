@@ -1,0 +1,26 @@
+{
+  "input": {
+    "user": {
+      "id": "doctor1-uuid",
+      "role": "DOCTOR",
+      "department_id": "1",
+      "hospital_id": "HOSPITAL_A",
+      "ward_id": "WARD_3B",
+      "position_level": 2
+    },
+    "resource": {
+      "object": "patient_record",
+      "action": "read",
+      "resource_id": "456",
+      "department_id": "2",
+      "hospital_id": "HOSPITAL_A"
+    },
+    "context": {
+      "hour": 10,
+      "minute": 30,
+      "workShiftActive": true,
+      "ipAddress": "192.168.1.10",
+      "channel": "WEB"
+    }
+  }
+}
