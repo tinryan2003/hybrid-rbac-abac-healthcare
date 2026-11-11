@@ -9,7 +9,7 @@ Simulated healthcare microservices platform implementing Hybrid RBAC-ABAC with K
 [![Keycloak](https://img.shields.io/badge/IAM-Keycloak-blue)](#)
 [![OPA](https://img.shields.io/badge/Policy-OPA-purple)](#)
 
-A production-oriented microservices platform for healthcare domains, implementing **Hybrid RBAC-ABAC** authorization using **Keycloak** (identity and role management) and **Open Policy Agent (OPA)** (policy decision engine).
+A simulated-oriented microservices platform for healthcare domains, implementing **Hybrid RBAC-ABAC** authorization using **Keycloak** (identity and role management) and **Open Policy Agent (OPA)** (policy decision engine).
 
 ---
 
@@ -50,7 +50,6 @@ This platform addresses both by externalizing authorization logic through OPA wh
 - Token-based authentication and SSO via **Keycloak**
 - Policy decision orchestration through **Authorization Service**
 - Domain-driven microservices (patient, appointment, lab, pharmacy, billing, etc.)
-- Event-driven integration with **RabbitMQ**
 - Audit trail support for compliance and traceability
 - API gateway enforcement and cross-cutting security controls
 
@@ -93,7 +92,6 @@ This platform addresses both by externalizing authorization logic through OPA wh
 | **Keycloak** | 8180 | SSO, JWT tokens, user management (IdP) |
 | **OPA** | 8181 | Policy engine (declarative Rego policies) |
 | **MySQL** | 3306 | Persistent storage (8 databases) |
-| **RabbitMQ** | 5672 | Event-driven architecture |
 
 ## Tech Stack
 
